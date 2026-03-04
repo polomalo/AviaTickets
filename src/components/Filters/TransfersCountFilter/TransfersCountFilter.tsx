@@ -54,13 +54,8 @@ const TransfersCountFilterInner = () => {
                             <Skeleton
                                 key={i}
                                 variant="rectangular"
-                                sx={{
-                                    mb: 1,
-                                    borderRadius: '4px',
-                                    height: 40,
-                                    width: 'calc(100% + 40px)',
-                                    ml: -2.5,
-                                }}
+                                height={24}
+                                sx={{ mb: 1, borderRadius: '4px' }}
                             />
                         ))}
                     </>

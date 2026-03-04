@@ -5,11 +5,20 @@ import CurrencySelect from "../CurrencySelect/CurrencySelect";
 const HeaderTitle = memo(() => {
     const logoSrc = `${import.meta.env.BASE_URL}Avia_Logo.png`;
     return (
-        <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 56,
+            }}
+        >
             <Box
                 component="img"
                 src={logoSrc}
                 alt="Avia Logo"
+                sx={{ width: 80, height: 80, flexShrink: 0, display: 'block' }}
             />
             <Typography
                 component="h1"
