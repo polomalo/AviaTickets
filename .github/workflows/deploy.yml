@@ -31,16 +31,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Fetch NBRB rates for build-time use
-        run: |
-          mkdir -p public
-          if curl -s --fail --max-time 15 "https://www.nbrb.by/api/exrates/rates?periodicity=0" -o public/nbrb-rates.json; then
-            echo "NBRB rates fetched successfully"
-          else
-            echo "Failed to fetch NBRB rates, writing empty stub"
-            echo "[]" > public/nbrb-rates.json
-          fi
-
       - name: Build
         run: npm run build
         env:
