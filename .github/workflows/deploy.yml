@@ -31,11 +31,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Fetch NBRB rates for build-time use
+        run: |
+          curl -s "https://www.nbrb.by/api/exrates/rates?periodicity=0" -o public/nbrb-rates.json
+
       - name: Build
         run: npm run build
         env:
           VITE_API_URL: https://e8c9ae01-cb8b-4fb7-adb1-a47246f35c21.mock.pstmn.io
-          VITE_NBRB_URL: https://www.nbrb.by/api/exrates/rates?periodicity=0
+          VITE_NBRB_URL: /nbrb-rates.json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
