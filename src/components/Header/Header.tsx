@@ -10,7 +10,6 @@ const HeaderTitle = memo(() => {
                 component="img"
                 src={logoSrc}
                 alt="Avia Logo"
-                sx={{ width: 40, height: 40, flexShrink: 0 }}
             />
             <Typography
                 component="h1"
