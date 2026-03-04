@@ -3,9 +3,15 @@ import { Box, Stack, Typography } from "@mui/material";
 import CurrencySelect from "../CurrencySelect/CurrencySelect";
 
 const HeaderTitle = memo(() => {
+    const logoSrc = `${import.meta.env.BASE_URL}Avia_Logo.png`;
     return (
         <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
-            <img src="/Avia_Logo.png" alt="Avia Logo" />
+            <Box
+                component="img"
+                src={logoSrc}
+                alt="Avia Logo"
+                sx={{ width: 40, height: 40, flexShrink: 0 }}
+            />
             <Typography
                 component="h1"
                 sx={{

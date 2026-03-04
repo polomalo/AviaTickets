@@ -37,7 +37,8 @@ function CurrencySelect({ portalContainer = null }: CurrencySelectProps) {
         setOpen(false)
     }
 
-    const otherOptions = CURRENCY_OPTIONS.filter((c) => c !== currency)
+  const otherOptions = CURRENCY_OPTIONS.filter((c) => c !== currency)
+  const arrowIconUrl = `${import.meta.env.BASE_URL}Arrow.svg`
 
     const content = (
     <Box sx={{ position: 'relative', display: 'inline-block' }}>
@@ -73,7 +74,7 @@ function CurrencySelect({ portalContainer = null }: CurrencySelectProps) {
                     width: 15,
                     height: 15,
                     flexShrink: 0,
-                    backgroundImage: 'url(/Arrow.svg)',
+              backgroundImage: `url(${arrowIconUrl})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                     backgroundSize: 'contain',
