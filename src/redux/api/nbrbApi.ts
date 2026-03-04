@@ -4,7 +4,11 @@ import { CURRENCY_OPTIONS } from '../../constants/currency'
 import { NBRB_RATES_URL } from '../../constants/currency'
 import type { NbrbRateItem } from '../../definitions/currency'
 
-const nbrbUrl = NBRB_RATES_URL ?? 'https://www.nbrb.by/api/exrates/rates?periodicity=0'
+const rawNbrbUrl = NBRB_RATES_URL ?? 'https://www.nbrb.by/api/exrates/rates?periodicity=0'
+const nbrbUrl =
+  rawNbrbUrl.startsWith('/')
+    ? `${import.meta.env.BASE_URL.replace(/\/$/, '')}${rawNbrbUrl}`
+    : rawNbrbUrl
 
 export type RatesMap = Partial<Record<CurrencyCode, { scale: number; rateToByn: number }>>
 
