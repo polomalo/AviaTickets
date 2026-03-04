@@ -74,7 +74,7 @@ function CurrencySelect({ portalContainer = null }: CurrencySelectProps) {
                     width: 15,
                     height: 15,
                     flexShrink: 0,
-              backgroundImage: `url(${arrowIconUrl})`,
+                    backgroundImage: `url(${arrowIconUrl})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                     backgroundSize: 'contain',

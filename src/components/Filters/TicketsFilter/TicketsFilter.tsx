@@ -18,6 +18,9 @@ const getButtonSx = (active: boolean) => ({
     background: active ? '#2196F3' : '#FFFFFF',
     borderColor: active ? '#2196F3' : '#DFE5EC',
     color: active ? '#FFFFFF' : '#4A4A4A',
+    '&:hover': {
+        background: active ? '#2196F3' : '#F1FCFF',
+    },
 });
 
 const TicketsFilter = ({ sortMode, onSortModeChange }: TicketsFilterProps) => {
