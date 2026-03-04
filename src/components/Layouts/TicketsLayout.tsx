@@ -55,7 +55,7 @@ const TicketsLayout = ({ sortMode, transferFilter }: { sortMode: SortMode; trans
     }
 
     return (
-        <Box sx={{ p: 2, paddingLeft: 0, paddingRight: 0 }}>
+        <Box sx={{ p: 2, paddingLeft: 0, paddingRight: 0, minHeight: { xs: 360, md: 420 } }}>
             <Grid container spacing={2}>
                 {visibleList.map((ticket, index) => (
                     <Grid key={getTicketKey(ticket, index)} size={{ xs: 12 }}>
