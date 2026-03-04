@@ -1,0 +1,31 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    --color-primary: #2196F3;
+    --color-primary-hover: #6155F5;
+    --color-primary-soft: #F1FCFF;
+    --color-border: #DFE5EC;
+    --color-border-muted: #9ABBCE;
+    --color-text-main: #4A4A4A;
+    --color-text-muted: #A0B0B9;
+    --color-placeholder: #C9C9C9;
+    --color-bg-page: #F3F7FA;
+    --color-bg-card: #FFFFFF;
+
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    scrollbar-gutter: stable;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: var(--color-bg-page);
+}

@@ -1,0 +1,40 @@
+.ticket {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+
+    &-tag {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        line-height: 1;
+        text-transform: uppercase;
+        color: #4A4A4A;
+
+        &-dot {
+            flex-shrink: 0;
+            width: 6px;
+            height: 6px;
+            background: #2196F3;
+            border-radius: 50%;
+        }
+    }
+
+    &-airlines {
+        &-container {
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        &-logo {
+            border-radius: 50%;
+        }
+    }
+
+    &-price {
+        font-weight: 600;
+        color: #2196F3;
+    }
+}
