@@ -1,24 +1,31 @@
 import { useRef } from "react";
-import { Button } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
+import dayjs from "dayjs";
 import type { DatePickerPortalHandle } from "../DatePickerPortal/DatePickerPortal";
 import { useTicketSearch } from "../../hooks/useTicketSearch";
-import "./SearchForm.scss";
+import AirportAutocomplete from "./AirportAutocomplete";
+import {
+    dividerAfterSx,
+    inputBaseSx,
+    outlinedRootSx,
+    noOutlineSx,
+    sectionSx,
+    formSx,
+} from "./styles";
 
-function formatDateDisplay(iso: string): string {
-  const [y, m, d] = iso.split("-");
-  return `${d}.${m}.${y}`;
-}
+const formatDateDisplay = (iso: string): string =>
+    dayjs(iso).format("DD.MM.YYYY");
 
 type SearchFormProps = {
-  datePickerRef: React.RefObject<DatePickerPortalHandle | null>;
+    datePickerRef: React.RefObject<DatePickerPortalHandle | null>;
 };
 
-export default function SearchForm({ datePickerRef }: SearchFormProps) {
+const SearchForm = ({ datePickerRef }: SearchFormProps) => {
     const { searchParams, setSearchParams, handleSearch } = useTicketSearch();
     const dateInputRef = useRef<HTMLInputElement>(null);
 
-    const handleSearchClick = () => {
-        void handleSearch(searchParams);
+    const handleSearchClick = async () => {
+        await handleSearch(searchParams);
     };
 
     const handleDateInputClick = () => {
@@ -26,74 +33,89 @@ export default function SearchForm({ datePickerRef }: SearchFormProps) {
             dateInputRef.current,
             searchParams.date,
             (iso) => {
-            setSearchParams((prev) => ({ ...prev, date: iso }));
+                setSearchParams((prev) => ({ ...prev, date: iso }));
             },
         );
     };
 
     return (
-        <section className="search">
-            <div className="search-form">
-                <div className="search-form-wrapper">
-                    <input
-                    id="from"
-                    type="text"
-                    placeholder="ОТКУДА"
-                    className="search-form-wrapper-input"
-                    autoComplete="off"
-                    value={searchParams.origin}
-                    onChange={(e) =>
-                        setSearchParams((prev) => ({ ...prev, origin: e.target.value }))
-                    }
+        <Box component="section" sx={sectionSx}>
+            <Box component="form" sx={formSx}>
+                <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    sx={{ width: "100%", height: "100%" }}
+                >
+                    <AirportAutocomplete
+                        value={searchParams.origin ?? ""}
+                        onChange={(val) =>
+                            setSearchParams((prev) => ({ ...prev, origin: val }))
+                        }
+                        placeholder="ОТКУДА"
+                        textFieldSx={{ "&::after": dividerAfterSx }}
+                        inputSx={inputBaseSx}
+                        rootSx={{
+                            borderTopLeftRadius: "10px",
+                            borderBottomLeftRadius: "10px",
+                        }}
                     />
-                </div>
-                <div className="search-form-wrapper">
-                    <input
-                    id="to"
-                    type="text"
-                    placeholder="КУДА"
-                    autoComplete="off"
-                    className="search-form-wrapper-input"
-                    value={searchParams.destination}
-                    onChange={(e) =>
-                        setSearchParams((prev) => ({ ...prev, destination: e.target.value }))
-                    }
+                    <AirportAutocomplete
+                        value={searchParams.destination ?? ""}
+                        onChange={(val) =>
+                            setSearchParams((prev) => ({ ...prev, destination: val }))
+                        }
+                        placeholder="КУДА"
+                        textFieldSx={{ "&::after": dividerAfterSx }}
+                        inputSx={inputBaseSx}
                     />
-                </div>
-                <div className="search-form-wrapper search-form-wrapper-date">
-                    <input
-                    ref={dateInputRef}
-                    id="date"
-                    type="text"
-                    placeholder="КОГДА"
-                    readOnly
-                    value={searchParams.date ? formatDateDisplay(searchParams.date) : ""}
-                    onClick={handleDateInputClick}
-                    className="search-form-wrapper-input"
+                    <TextField
+                        inputRef={dateInputRef}
+                        id="date"
+                        type="text"
+                        placeholder="КОГДА"
+                        value={searchParams.date ? formatDateDisplay(searchParams.date) : ""}
+                        onClick={handleDateInputClick}
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                            height: "50px",
+                            "& .MuiInputBase-input": {
+                                ...inputBaseSx,
+                                cursor: "pointer",
+                            },
+                            "& .MuiOutlinedInput-root": {
+                                ...outlinedRootSx,
+                                borderTopRightRadius: { xs: 0, sm: "10px" },
+                                borderBottomLeftRadius: { xs: "10px", sm: 0 },
+                                borderBottomRightRadius: "10px",
+                            },
+                            "& .MuiOutlinedInput-notchedOutline": noOutlineSx,
+                        }}
+                        slotProps={{
+                            input: { readOnly: true },
+                        }}
                     />
-                </div>
-            </div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSearchClick}
-                sx={{
-                    width: { xs: '100%', sm: 300 },
-                    height: '100%',
-                    backgroundColor: '#2196F3',
-                    color: '#fff',
-                    borderRadius: 1,
-                    ml: { xs: 0, sm: 2.5 },
-                    mt: { xs: 1.5, sm: 0 },
-                    '&:hover': {
-                    backgroundColor: '#6155F5',
-                    },
-                }}
-                className="search-form-button"
-            >
-                Найти
-            </Button>
-        </section>
-    );
-}
+                </Stack>
 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSearchClick}
+                    sx={{
+                        width: { xs: "100%", sm: 300 },
+                        height: { xs: 44, sm: "100%" },
+                        backgroundColor: "#2196F3",
+                        color: "#fff",
+                        borderRadius: 1,
+                        ml: { xs: 0, sm: 2.5 },
+                        mt: { xs: 1.5, sm: 0 },
+                        "&:hover": { backgroundColor: "#6155F5" },
+                    }}
+                >
+                    Найти
+                </Button>
+            </Box>
+        </Box>
+    );
+};
+
+export default SearchForm;
