@@ -15,6 +15,10 @@ const autocompleteSlotProps = {
     paper: {
         sx: {
             boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
+            "& .MuiAutocomplete-listbox .MuiAutocomplete-option": {
+                display: "flex",
+                justifyContent: "center",
+            },
             "& .MuiAutocomplete-option:hover": {
                 backgroundColor: "#F0F4F8",
             },
