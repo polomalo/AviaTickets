@@ -35,7 +35,7 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: https://e8c9ae01-cb8b-4fb7-adb1-a47246f35c21.mock.pstmn.io
-          VITE_NBRB_URL: /nbrb-rates.json
+          VITE_NBRB_URL: /Nbrb_Rates.json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
