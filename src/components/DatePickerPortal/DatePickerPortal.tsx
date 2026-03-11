@@ -1,7 +1,7 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
-import { Popper, Paper, ClickAwayListener } from '@mui/material'
+import { Popper, Paper, ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
 import dayjs, { type Dayjs } from 'dayjs'
 
 const ALLOWED_DATES = ['2026-02-20', '2026-02-26'];
@@ -16,6 +16,19 @@ const DatePickerPortal = forwardRef<DatePickerPortalHandle>(function DatePickerP
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const [value, setValue] = useState<string>('')
     const onSelectRef = useRef<(iso: string) => void>(() => {})
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+    useEffect(() => {
+        if (!open) return
+
+        const previousOverflow = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+
+        return () => {
+            document.body.style.overflow = previousOverflow
+        }
+    }, [open])
 
     useImperativeHandle(ref, () => ({
         open(anchor: HTMLElement | null, initialDate: string, onSelect: (iso: string) => void) {
@@ -39,22 +52,58 @@ const DatePickerPortal = forwardRef<DatePickerPortalHandle>(function DatePickerP
 
   if (!open || !anchorEl) return null
 
+  const calendar = (
+    <DateCalendar
+        value={value ? (dayjs(value) as Dayjs) : null}
+        referenceDate={FEBRUARY_2026.min}
+        minDate={FEBRUARY_2026.min}
+        maxDate={FEBRUARY_2026.max}
+        disableHighlightToday
+        onChange={handleChange}
+        shouldDisableDate={(d) => {
+            const iso = d.format('YYYY-MM-DD')
+            return !ALLOWED_DATES.includes(iso as (typeof ALLOWED_DATES)[number])
+        }}
+    />
+  )
+
+  if (isMobile) {
+    return createPortal(
+        <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Выбор даты вылета"
+            onClick={handleClose}
+            style={{
+                position: 'fixed',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1300,
+            }}
+        >
+            <Paper
+                elevation={8}
+                sx={{
+                    overflow: 'hidden',
+                    width: '100%',
+                    mx: 2,
+                }}
+                onClick={(event) => event.stopPropagation()}
+            >
+                {calendar}
+            </Paper>
+        </div>,
+        document.body
+    )
+  }
+
   const content = (
     <ClickAwayListener onClickAway={handleClose}>
         <div style={{ outline: 'none' }}>
             <Paper elevation={8} sx={{ overflow: 'hidden' }}>
-                <DateCalendar
-                value={value ? (dayjs(value) as Dayjs) : null}
-                referenceDate={FEBRUARY_2026.min}
-                minDate={FEBRUARY_2026.min}
-                maxDate={FEBRUARY_2026.max}
-                disableHighlightToday
-                onChange={handleChange}
-                shouldDisableDate={(d) => {
-                const iso = d.format('YYYY-MM-DD')
-                return !ALLOWED_DATES.includes(iso as (typeof ALLOWED_DATES)[number])
-                }}
-            />
+                {calendar}
             </Paper>
         </div>
     </ClickAwayListener>
