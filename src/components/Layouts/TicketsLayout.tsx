@@ -3,7 +3,7 @@ import type { TicketItem } from '../../definitions/ticket';
 import type { SortMode, TransferFilter } from '../../definitions/filters';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
-import { selectFilteredAndSortedTickets } from '../../redux/selectors/ticketsSelectors';
+import { selectFilteredAndSortedTickets, selectTicketLabels } from '../../redux/selectors/ticketsSelectors';
 import { PAGE_SIZE } from '../../constants/search';
 import { usePagination } from '../../hooks/usePagination';
 import { Button, CircularProgress } from '@mui/material';
@@ -21,15 +21,10 @@ const TicketsLayout = ({ sortMode, transferFilter }: { sortMode: SortMode; trans
     const sortedTickets = useSelector((state: RootState) =>
         selectFilteredAndSortedTickets(state, sortMode, transferFilter)
     );
+    const ticketLabels = useSelector((state: RootState) =>
+        selectTicketLabels(state, transferFilter)
+    );
     const { visibleList, hasMore, loadMore } = usePagination(sortedTickets, PAGE_SIZE);
-
-    const getDisplayTag = (index: number): string | undefined => {
-        if (index !== 0) return undefined;
-        if (sortMode === 'cheapest') return 'самый дешевый';
-        if (sortMode === 'fastest') return 'самый быстрый';
-        if (sortMode === 'optimal') return 'оптимальный';
-        return undefined;
-    };
 
     if (loading) {
         return (
@@ -59,7 +54,7 @@ const TicketsLayout = ({ sortMode, transferFilter }: { sortMode: SortMode; trans
             <Grid container spacing={2}>
                 {visibleList.map((ticket, index) => (
                     <Grid key={getTicketKey(ticket, index)} size={{ xs: 12 }}>
-                        <Ticket ticket={ticket} displayTag={getDisplayTag(index)} />
+                        <Ticket ticket={ticket} labels={ticketLabels.get(ticket)} />
                     </Grid>
                 ))}
             </Grid>

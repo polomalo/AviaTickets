@@ -18,46 +18,48 @@ function filterByTransfers(tickets: TicketItem[], transferFilter: TransferFilter
 }
 
 function normalize(value: number, min: number, max: number): number {
-    const range = max - min || 1
-    return (value - min) / range
+    return (value - min) / (max - min || 1)
 }
 
-function sortByCheapest(list: TicketItem[]): TicketItem[] {
-    return [...list].sort((a, b) => (a.priceRub ?? 0) - (b.priceRub ?? 0))
+type TicketStats = {
+    prices: number[]
+    durations: number[]
+    scores: number[]
+    minPrice: number
+    minDuration: number
+    minScore: number
 }
 
-function sortByFastest(list: TicketItem[], durations: number[]): TicketItem[] {
-    return [...list]
-        .map((t, i) => [t, durations[i]] as const)
-        .sort((a, b) => a[1] - b[1])
-        .map((x) => x[0])
-}
-
-function sortByOptimal(list: TicketItem[], durations: number[]): TicketItem[] {
+function computeStats(list: TicketItem[]): TicketStats {
     const prices = list.map((t) => t.priceRub ?? 0)
-    const minP = Math.min(...prices)
-    const maxP = Math.max(...prices)
-    const minD = Math.min(...durations)
-    const maxD = Math.max(...durations)
-    return [...list]
-        .map((t, i) => ({
-            t,
-            score: normalize(prices[i], minP, maxP) + normalize(durations[i], minD, maxD),
-        }))
-        .sort((a, b) => a.score - b.score)
-        .map((x) => x.t)
+    const durations = list.map(getTotalDuration)
+
+    const minPrice = Math.min(...prices)
+    const maxPrice = Math.max(...prices)
+    const minDuration = Math.min(...durations)
+    const maxDuration = Math.max(...durations)
+
+    const scores = list.map((_, i) =>
+        normalize(prices[i], minPrice, maxPrice) + normalize(durations[i], minDuration, maxDuration)
+    )
+    const minScore = Math.min(...scores)
+
+    return { prices, durations, scores, minPrice, minDuration, minScore }
 }
 
 function sortTickets(list: TicketItem[], sortMode: SortMode): TicketItem[] {
     if (list.length === 0) return list
-    const durations = list.map((t) => getTotalDuration(t))
+    const { prices, durations, scores } = computeStats(list)
+
+    const indexed = list.map((t, i) => ({ t, i }))
+
     switch (sortMode) {
         case 'cheapest':
-            return sortByCheapest(list)
+            return indexed.sort((a, b) => prices[a.i] - prices[b.i]).map((x) => x.t)
         case 'fastest':
-            return sortByFastest(list, durations)
+            return indexed.sort((a, b) => durations[a.i] - durations[b.i]).map((x) => x.t)
         case 'optimal':
-            return sortByOptimal(list, durations)
+            return indexed.sort((a, b) => scores[a.i] - scores[b.i]).map((x) => x.t)
         default:
             return list
     }
@@ -72,5 +74,31 @@ export const selectFilteredAndSortedTickets = createSelector(
     (tickets, sortMode, transferFilter) => {
         const filtered = filterByTransfers(tickets, transferFilter)
         return sortTickets(filtered, sortMode)
+    }
+)
+
+export type TicketLabel = 'самый дешевый' | 'самый быстрый' | 'оптимальный'
+
+export const selectTicketLabels = createSelector(
+    [
+        (state: RootState) => state.tickets.tickets,
+        (_state: RootState, transferFilter: TransferFilter) => transferFilter,
+    ],
+    (tickets, transferFilter): Map<TicketItem, TicketLabel[]> => {
+        const filtered = filterByTransfers(tickets, transferFilter)
+        if (filtered.length === 0) return new Map()
+
+        const { prices, durations, scores, minPrice, minDuration, minScore } = computeStats(filtered)
+        const labels = new Map<TicketItem, TicketLabel[]>()
+
+        for (let i = 0; i < filtered.length; i++) {
+            const ticketLabels: TicketLabel[] = []
+            if (prices[i] === minPrice) ticketLabels.push('самый дешевый')
+            if (durations[i] === minDuration) ticketLabels.push('самый быстрый')
+            if (scores[i] === minScore) ticketLabels.push('оптимальный')
+            if (ticketLabels.length > 0) labels.set(filtered[i], ticketLabels)
+        }
+
+        return labels
     }
 )

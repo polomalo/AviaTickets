@@ -6,6 +6,7 @@ import { useCurrencyCode, useConvertFromRub } from '../../hooks/useCurrency';
 import { CURRENCY_SYMBOL } from '../../constants/currency';
 import { formatTransfers } from '../../utils/formatTransfers';
 import { formatDuration } from '../../utils/formatTime';
+import type { TicketLabel } from '../../redux/selectors/ticketsSelectors';
 
 const routeTextSx = {
     fontSize: { xs: 11, sm: 13, md: 14 },
@@ -40,7 +41,7 @@ function TicketPrice({ priceRub }: { priceRub: number }) {
     );
 }
 
-const Ticket = memo(function Ticket({ ticket, displayTag }: { ticket: TicketItem; displayTag?: string }) {
+const Ticket = memo(function Ticket({ ticket, labels }: { ticket: TicketItem; labels?: TicketLabel[] }) {
     const segment0 = ticket.segment?.[0];
     const flights = segment0?.flight ?? [];
     const carriers = ticket.carriers;
@@ -62,17 +63,22 @@ const Ticket = memo(function Ticket({ ticket, displayTag }: { ticket: TicketItem
                     <TicketPrice priceRub={ticket.priceRub ?? 0} />
                 </Grid>
                 <Grid size={4} sx={{ display: 'flex', alignItems: 'center' }}>
-                    {displayTag && (
-                        <Typography
-                            className='ticket-tag'
-                            sx={{
-                                fontSize: { xs: 10, sm: 11, md: 12 },
-                                textAlign: 'center',
-                            }}
-                        >
-                            <span className='ticket-tag-dot'></span>
-                            {displayTag}
-                        </Typography>
+                    {labels && labels.length > 0 && (
+                        <Stack direction="column" spacing={0.5}>
+                            {labels.map((label) => (
+                                <Typography
+                                    key={label}
+                                    className='ticket-tag'
+                                    sx={{
+                                        fontSize: { xs: 10, sm: 11, md: 12 },
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <span className='ticket-tag-dot'></span>
+                                    {label}
+                                </Typography>
+                            ))}
+                        </Stack>
                     )}
                 </Grid>
                 <Grid size={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
