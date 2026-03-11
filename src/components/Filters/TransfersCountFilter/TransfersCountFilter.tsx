@@ -3,7 +3,7 @@ import { memo, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Skeleton } from '@mui/material';
 import type { AppDispatch, RootState } from '../../../redux/store';
-import { setAllTransfers, toggleTransferCount } from '../../../redux/slices/transfersFilterSlice';
+import { setAllTransfers, toggleTransferCount, selectOnlyTransferCount } from '../../../redux/slices/transfersFilterSlice';
 import { selectTransfersFilterView } from '../../../redux/selectors/transfersSelectors';
 import { formatTransfers } from '../../../utils/formatTransfers';
 
@@ -40,8 +40,14 @@ const TransfersCountFilterInner = () => {
 
     const handleAllChange = useCallback(() => dispatch(setAllTransfers()), [dispatch]);
     const handleTransferCountChange = useCallback(
-        (count: number) => () => dispatch(toggleTransferCount(count)),
-        [dispatch]
+        (count: number) => () => {
+            if (allTransfers) {
+                dispatch(selectOnlyTransferCount(count));
+            } else {
+                dispatch(toggleTransferCount({ count, totalOptions: transferOptions.length }));
+            }
+        },
+        [dispatch, allTransfers, transferOptions]
     );
 
     return (
@@ -65,7 +71,7 @@ const TransfersCountFilterInner = () => {
                         {transferOptions.map((count) => (
                             <TransfersCheckboxRow
                                 key={count}
-                                checked={transferCounts.includes(count)}
+                                checked={allTransfers || transferCounts.includes(count)}
                                 onChange={handleTransferCountChange(count)}
                                 label={formatTransfers(count)}
                             />
