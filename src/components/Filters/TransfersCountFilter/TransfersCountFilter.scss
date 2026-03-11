@@ -55,11 +55,6 @@
             border: 1px solid var(--color-border-muted);
             background-color: transparent;
             position: relative;
-
-            .transfers-count-filter-row-input:checked + & {
-                border-color: var(--color-primary);
-                background: var(--check-icon) center / 12px 8px no-repeat;
-            }
         }
 
         &-label {

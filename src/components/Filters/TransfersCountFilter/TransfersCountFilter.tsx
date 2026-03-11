@@ -29,7 +29,13 @@ function TransfersCheckboxRow({
             <span
                 className="transfers-count-filter-row-box"
                 aria-hidden
-                style={{ '--check-icon': `url(${checkIconUrl})` } as React.CSSProperties}
+                style={checked ? {
+                    borderColor: 'var(--color-primary)',
+                    backgroundImage: `url(${checkIconUrl})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '12px 8px',
+                } : undefined}
             />
             <span className="transfers-count-filter-row-label">{label}</span>
         </label>
