@@ -7,6 +7,8 @@ import { setAllTransfers, toggleTransferCount, selectOnlyTransferCount } from '.
 import { selectTransfersFilterView } from '../../../redux/selectors/transfersSelectors';
 import { formatTransfers } from '../../../utils/formatTransfers';
 
+const checkIconUrl = `${import.meta.env.BASE_URL}Check.svg`;
+
 function TransfersCheckboxRow({
     checked,
     onChange,
@@ -24,7 +26,11 @@ function TransfersCheckboxRow({
                 onChange={onChange}
                 className="transfers-count-filter-row-input"
             />
-            <span className="transfers-count-filter-row-box" aria-hidden />
+            <span
+                className="transfers-count-filter-row-box"
+                aria-hidden
+                style={checked ? { background: `url(${checkIconUrl}) center no-repeat`, backgroundSize: '12px 8px' } : undefined}
+            />
             <span className="transfers-count-filter-row-label">{label}</span>
         </label>
     );
