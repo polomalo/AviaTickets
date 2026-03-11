@@ -80,6 +80,7 @@ const DatePickerPortal = forwardRef<DatePickerPortalHandle>(function DatePickerP
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.4)',
                 zIndex: 1300,
             }}
         >
