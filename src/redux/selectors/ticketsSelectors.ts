@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { TicketItem } from '../../definitions/ticket'
-import type { SortMode, TransferFilter } from '../../definitions/filters'
+import type { SortMode, TransferFilter, AirlineFilter } from '../../definitions/filters'
 import { getTransferCount } from '../../utils/ticketUtils'
 
 function getTotalDuration(t: TicketItem): number {
@@ -15,6 +15,19 @@ function filterByTransfers(tickets: TicketItem[], transferFilter: TransferFilter
         return tickets
     }
     return tickets.filter((t) => transferFilter.transferCounts.has(getTransferCount(t)))
+}
+
+function filterByAirlines(tickets: TicketItem[], airlineFilter: AirlineFilter): TicketItem[] {
+    if (airlineFilter.allAirlines || airlineFilter.selectedAirlines.size === 0) {
+        return tickets
+    }
+    return tickets.filter((t) =>
+        t.carriers.some((c) => airlineFilter.selectedAirlines.has(c))
+    )
+}
+
+function applyFilters(tickets: TicketItem[], transferFilter: TransferFilter, airlineFilter: AirlineFilter): TicketItem[] {
+    return filterByAirlines(filterByTransfers(tickets, transferFilter), airlineFilter)
 }
 
 function normalize(value: number, min: number, max: number): number {
@@ -68,11 +81,12 @@ function sortTickets(list: TicketItem[], sortMode: SortMode): TicketItem[] {
 export const selectFilteredAndSortedTickets = createSelector(
     [
         (state: RootState) => state.tickets.tickets,
-        (_state: RootState, sortMode: SortMode) => sortMode,
-        (_state: RootState, _sortMode: SortMode, transferFilter: TransferFilter) => transferFilter,
+        (_s: RootState, sortMode: SortMode) => sortMode,
+        (_s: RootState, _sm: SortMode, transferFilter: TransferFilter) => transferFilter,
+        (_s: RootState, _sm: SortMode, _tf: TransferFilter, airlineFilter: AirlineFilter) => airlineFilter,
     ],
-    (tickets, sortMode, transferFilter) => {
-        const filtered = filterByTransfers(tickets, transferFilter)
+    (tickets, sortMode, transferFilter, airlineFilter) => {
+        const filtered = applyFilters(tickets, transferFilter, airlineFilter)
         return sortTickets(filtered, sortMode)
     }
 )
@@ -82,10 +96,11 @@ export type TicketLabel = 'самый дешевый' | 'самый быстры
 export const selectTicketLabels = createSelector(
     [
         (state: RootState) => state.tickets.tickets,
-        (_state: RootState, transferFilter: TransferFilter) => transferFilter,
+        (_s: RootState, transferFilter: TransferFilter) => transferFilter,
+        (_s: RootState, _tf: TransferFilter, airlineFilter: AirlineFilter) => airlineFilter,
     ],
-    (tickets, transferFilter): Map<TicketItem, TicketLabel[]> => {
-        const filtered = filterByTransfers(tickets, transferFilter)
+    (tickets, transferFilter, airlineFilter): Map<TicketItem, TicketLabel[]> => {
+        const filtered = applyFilters(tickets, transferFilter, airlineFilter)
         if (filtered.length === 0) return new Map()
 
         const { prices, durations, scores, minPrice, minDuration, minScore } = computeStats(filtered)

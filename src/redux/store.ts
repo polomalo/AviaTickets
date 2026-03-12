@@ -4,6 +4,7 @@ import { nbrbApi } from './api/nbrbApi'
 import ticketsReducer from './slices/ticketSlice'
 import currencyReducer from './slices/currencySlice'
 import transfersFilterReducer from './slices/transfersFilterSlice'
+import airlinesFilterReducer from './slices/airlinesFilterSlice'
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         tickets: ticketsReducer,
         currency: currencyReducer,
         transfersFilter: transfersFilterReducer,
+        airlinesFilter: airlinesFilterReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(ticketsApi.middleware, nbrbApi.middleware),

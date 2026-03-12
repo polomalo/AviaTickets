@@ -1,5 +1,6 @@
 import MainLayout from "./components/Layouts/MainLayout";
 import TransfersCountFilter from "./components/Filters/TransfersCountFilter/TransfersCountFilter";
+import AviaCompanyFilter from "./components/Filters/AviaCompanysFilter/AviaCompanyFilter";
 import { useRef } from "react";
 import Header from "./components/Header/Header";
 import SearchForm from "./components/SearchForm/SearchForm";
@@ -24,8 +25,9 @@ export default function App() {
                     alignItems: { xs: "stretch", md: "flex-start" },
                     }}
                 >
-                    <Box sx={{ flexShrink: 0, width: { xs: "100%", md: 280 } }}>
+                    <Box sx={{ flexShrink: 0, width: { xs: "100%", md: 280 }, display: "flex", flexDirection: "column", gap: 2 }}>
                         <TransfersCountFilter />
+                        <AviaCompanyFilter />
                     </Box>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                         <TicketsColumn />

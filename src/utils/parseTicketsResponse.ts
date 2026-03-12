@@ -1,6 +1,11 @@
-import type { TicketItem, TicketsApiResponse } from '../definitions/ticket';
+import type { TicketItem, TicketsApiResponse, AirlineInfo } from '../definitions/ticket';
 
-export function parseTicketsResponse(rawBody: TicketsApiResponse | string): TicketItem[] {
+export type ParsedTicketsResult = {
+    tickets: TicketItem[];
+    airlines: Record<string, AirlineInfo>;
+};
+
+export function parseTicketsResponse(rawBody: TicketsApiResponse | string): ParsedTicketsResult {
     let parsed: TicketsApiResponse | string = rawBody;
 
     if (typeof rawBody === 'string') {
@@ -8,12 +13,20 @@ export function parseTicketsResponse(rawBody: TicketsApiResponse | string): Tick
         try {
             parsed = JSON.parse(normalized) as TicketsApiResponse;
         } catch {
-            return [];
+            return { tickets: [], airlines: {} };
         }
     }
 
     if (typeof parsed === 'string' || !Array.isArray(parsed.data)) {
-        return [];
+        return { tickets: [], airlines: {} };
     }
-    return parsed.data;
+
+    const allAirlines: Record<string, AirlineInfo> = {};
+    for (const item of parsed.data) {
+        if (item.airlines) {
+            Object.assign(allAirlines, item.airlines);
+        }
+    }
+
+    return { tickets: parsed.data, airlines: allAirlines };
 }

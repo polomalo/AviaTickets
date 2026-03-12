@@ -23,8 +23,13 @@ export interface TicketItem {
     airports?: string[];
 }
 
+export interface AirlineInfo {
+    id: number;
+    name: string;
+}
+
 export interface TicketsApiResponse {
-    data: TicketItem[];
+    data: (TicketItem & { airlines?: Record<string, AirlineInfo> })[];
 }
 
 export interface SearchParams {

@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
 import type { TicketItem } from '../../definitions/ticket';
-import type { SortMode, TransferFilter } from '../../definitions/filters';
+import type { SortMode, TransferFilter, AirlineFilter } from '../../definitions/filters';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { selectFilteredAndSortedTickets, selectTicketLabels } from '../../redux/selectors/ticketsSelectors';
@@ -16,13 +16,13 @@ function getTicketKey(ticket: TicketItem, index: number): string {
     return `${ticket.priceRub ?? 0}-${ticket.carriers.join(',')}-${route}-${index}`;
 }
 
-const TicketsLayout = ({ sortMode, transferFilter }: { sortMode: SortMode; transferFilter: TransferFilter }) => {
+const TicketsLayout = ({ sortMode, transferFilter, airlineFilter }: { sortMode: SortMode; transferFilter: TransferFilter; airlineFilter: AirlineFilter }) => {
     const { tickets: ticketsState, loading, error, hasSearched } = useSelector((state: RootState) => state.tickets);
     const sortedTickets = useSelector((state: RootState) =>
-        selectFilteredAndSortedTickets(state, sortMode, transferFilter)
+        selectFilteredAndSortedTickets(state, sortMode, transferFilter, airlineFilter)
     );
     const ticketLabels = useSelector((state: RootState) =>
-        selectTicketLabels(state, transferFilter)
+        selectTicketLabels(state, transferFilter, airlineFilter)
     );
     const { visibleList, hasMore, loadMore } = usePagination(sortedTickets, PAGE_SIZE);
 

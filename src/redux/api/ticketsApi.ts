@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { SearchParams } from '../../definitions/ticket'
-import type { TicketItem } from '../../definitions/ticket'
 import { parseTicketsResponse } from '../../utils/parseTicketsResponse'
+import type { ParsedTicketsResult } from '../../utils/parseTicketsResponse'
 
 const baseUrl = import.meta.env.VITE_API_URL ?? ''
 
@@ -16,7 +16,7 @@ export const ticketsApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        searchTickets: builder.mutation<TicketItem[], SearchParams>({
+        searchTickets: builder.mutation<ParsedTicketsResult, SearchParams>({
             query: (params) => ({
                 url: '/search',
                 method: 'POST',
@@ -27,7 +27,7 @@ export const ticketsApi = createApi({
                 },
                 responseHandler: 'text',
             }),
-            transformResponse: (raw: string): TicketItem[] => parseTicketsResponse(raw),
+            transformResponse: (raw: string): ParsedTicketsResult => parseTicketsResponse(raw),
             transformErrorResponse: (response: unknown) => {
                 const err = response as { status?: number; data?: { message?: string } };
                 const status = err?.status;

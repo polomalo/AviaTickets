@@ -48,10 +48,10 @@ export function useTicketSearch() {
             })
 
             try {
-                const tickets = await searchTickets(request).unwrap()
-                dispatch(setTicketsResult({ tickets, loading: false, error: null }))
+                const { tickets, airlines } = await searchTickets(request).unwrap()
+                dispatch(setTicketsResult({ tickets, airlines, loading: false, error: null }))
             } catch (err) {
-                dispatch(setTicketsResult({ tickets: [], loading: false, error: getErrorMessage(err) }))
+                dispatch(setTicketsResult({ tickets: [], airlines: {}, loading: false, error: getErrorMessage(err) }))
             }
         },
         [dispatch, searchTickets]
