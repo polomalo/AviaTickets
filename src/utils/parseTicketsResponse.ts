@@ -1,4 +1,4 @@
-import type { TicketItem, TicketsApiResponse, AirlineInfo } from '../definitions/ticket';
+import type { TicketItem, TicketsApiResponse, AirlineInfo } from '@/definitions/ticket';
 
 export type ParsedTicketsResult = {
     tickets: TicketItem[];

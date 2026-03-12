@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import type { AppDispatch } from '../redux/store'
-import type { SearchParams } from '../definitions/ticket'
-import { useSearchTicketsMutation } from '../redux/api/ticketsApi'
-import { setTicketsResult } from '../redux/slices/ticketSlice'
-import { getCodeFromInput, getCityNameForDisplay } from '../constants/airports'
-import { getErrorMessage } from '../utils/getErrorMessage'
-import { defaultSearch } from '../constants/search'
+import type { AppDispatch } from '@/redux/store'
+import type { SearchParams } from '@/definitions/ticket'
+import { useSearchTicketsMutation } from '@/redux/api/ticketsApi'
+import { setTicketsResult } from '@/redux/slices/ticketSlice'
+import { getCodeFromInput, getCityNameForDisplay } from '@/constants/airports'
+import { getErrorMessage } from '@/utils/getErrorMessage'
+import { defaultSearch } from '@/constants/search'
 
 export function useTicketSearch() {
     const dispatch = useDispatch<AppDispatch>()

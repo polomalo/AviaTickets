@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import './Ticket.scss';
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import type { TicketItem } from '../../definitions/ticket';
-import { useCurrencyCode, useConvertFromRub } from '../../hooks/useCurrency';
-import { CURRENCY_SYMBOL } from '../../constants/currency';
-import { formatTransfers } from '../../utils/formatTransfers';
-import { formatDuration } from '../../utils/formatTime';
-import type { TicketLabel } from '../../redux/selectors/ticketsSelectors';
+import type { TicketItem } from '@/definitions/ticket';
+import { useCurrencyCode, useConvertFromRub } from '@/hooks/useCurrency';
+import { CURRENCY_SYMBOL } from '@/constants/currency';
+import { formatTransfers } from '@/utils/formatTransfers';
+import { formatDuration } from '@/utils/formatTime';
+import type { TicketLabel } from '@/redux/selectors/ticketsSelectors';
 
 const routeTextSx = {
     fontSize: { xs: 11, sm: 13, md: 14 },

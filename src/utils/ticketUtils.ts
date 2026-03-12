@@ -1,4 +1,4 @@
-import type { TicketItem } from '../definitions/ticket';
+import type { TicketItem } from '@/definitions/ticket';
 
 export function getTransferCount(ticket: TicketItem): number {
     const raw = ticket.max_stops

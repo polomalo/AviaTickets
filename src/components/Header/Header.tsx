@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import CurrencySelect from "../CurrencySelect/CurrencySelect";
+import { CurrencySelect } from "@components";
 
 const HeaderTitle = memo(() => {
     const logoSrc = `${import.meta.env.BASE_URL}Avia_Logo.png`;

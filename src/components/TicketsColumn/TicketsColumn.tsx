@@ -1,9 +1,8 @@
 import { memo, useState } from 'react'
-import type { SortMode } from '../../definitions/filters'
-import { useTransferFilter } from '../../hooks/useTransferFilter'
-import { useAirlineFilter } from '../../hooks/useAirlineFilter'
-import TicketsFilter from '../Filters/TicketsFilter/TicketsFilter'
-import TicketsLayout from '../Layouts/TicketsLayout'
+import type { SortMode } from '@/definitions/filters'
+import { useTransferFilter } from '@/hooks/useTransferFilter'
+import { useAirlineFilter } from '@/hooks/useAirlineFilter'
+import { TicketsFilter, TicketsLayout } from '@components'
 
 const TicketsColumn = memo(function TicketsColumn() {
     const [sortMode, setSortMode] = useState<SortMode>('cheapest')

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { CurrencyCode } from '../../constants/currency'
+import type { CurrencyCode } from '@/constants/currency'
 
 type CurrencyState = { current: CurrencyCode }
 

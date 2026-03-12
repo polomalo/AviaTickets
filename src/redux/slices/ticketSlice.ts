@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { TicketItem, AirlineInfo } from '../../definitions/ticket'
+import type { TicketItem, AirlineInfo } from '@/definitions/ticket'
 
-export type { SearchParams } from '../../definitions/ticket'
+export type { SearchParams } from '@/definitions/ticket'
 
 interface TicketsState {
     tickets: TicketItem[]

@@ -1,6 +1,6 @@
 import { Autocomplete, TextField, createFilterOptions } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material";
-import { AIRPORTS } from "../../constants/airports";
+import { AIRPORTS } from "@/constants/airports";
 import { outlinedRootSx, noOutlineSx } from "./styles";
 
 const airportOptions = Object.values(AIRPORTS).map((data) => data.city);

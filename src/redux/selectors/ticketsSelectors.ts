@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
-import type { TicketItem } from '../../definitions/ticket'
-import type { SortMode, TransferFilter, AirlineFilter } from '../../definitions/filters'
-import { getTransferCount } from '../../utils/ticketUtils'
+import type { RootState } from '@/redux/store'
+import type { TicketItem } from '@/definitions/ticket'
+import type { SortMode, TransferFilter, AirlineFilter } from '@/definitions/filters'
+import { getTransferCount } from '@/utils/ticketUtils'
 
 function getTotalDuration(t: TicketItem): number {
     const seg = t.segment?.[0]

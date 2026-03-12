@@ -1,13 +1,13 @@
 import { Box, Grid, Typography } from '@mui/material';
-import type { TicketItem } from '../../definitions/ticket';
-import type { SortMode, TransferFilter, AirlineFilter } from '../../definitions/filters';
+import type { TicketItem } from '@/definitions/ticket';
+import type { SortMode, TransferFilter, AirlineFilter } from '@/definitions/filters';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../redux/store';
-import { selectFilteredAndSortedTickets, selectTicketLabels } from '../../redux/selectors/ticketsSelectors';
-import { PAGE_SIZE } from '../../constants/search';
-import { usePagination } from '../../hooks/usePagination';
+import type { RootState } from '@/redux/store';
+import { selectFilteredAndSortedTickets, selectTicketLabels } from '@/redux/selectors/ticketsSelectors';
+import { PAGE_SIZE } from '@/constants/search';
+import { usePagination } from '@/hooks/usePagination';
 import { Button, CircularProgress } from '@mui/material';
-import Ticket from '../Ticket/Ticket';
+import { Ticket } from '@components';
 
 function getTicketKey(ticket: TicketItem, index: number): string {
     const seg = ticket.segment?.[0];

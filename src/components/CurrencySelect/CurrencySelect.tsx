@@ -1,9 +1,9 @@
 import { memo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Box, Typography } from '@mui/material'
-import { useCurrency, useCurrencyCode } from '../../hooks/useCurrency'
-import { CURRENCY_OPTIONS } from '../../constants/currency'
-import type { CurrencyCode } from '../../constants/currency'
+import { useCurrency, useCurrencyCode } from '@/hooks/useCurrency'
+import { CURRENCY_OPTIONS } from '@/constants/currency'
+import type { CurrencyCode } from '@/constants/currency'
 
 export type CurrencySelectProps = {
   portalContainer?: HTMLElement | null

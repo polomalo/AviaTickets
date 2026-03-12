@@ -1,5 +1,5 @@
 import { Box, Button, ButtonGroup } from '@mui/material';
-import type { SortMode } from '../../../definitions/filters';
+import type { SortMode } from '@/definitions/filters';
 
 export interface TicketsFilterProps {
     sortMode: SortMode;

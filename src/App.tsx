@@ -1,13 +1,15 @@
-import MainLayout from "./components/Layouts/MainLayout";
-import TransfersCountFilter from "./components/Filters/TransfersCountFilter/TransfersCountFilter";
-import AviaCompanyFilter from "./components/Filters/AviaCompanysFilter/AviaCompanyFilter";
 import { useRef } from "react";
-import Header from "./components/Header/Header";
-import SearchForm from "./components/SearchForm/SearchForm";
-import DatePickerPortal from "./components/DatePickerPortal/DatePickerPortal";
-import type { DatePickerPortalHandle } from "./components/DatePickerPortal/DatePickerPortal";
 import { Box, Stack } from "@mui/material";
-import TicketsColumn from "./components/TicketsColumn/TicketsColumn";
+import {
+    MainLayout,
+    Header,
+    SearchForm,
+    DatePickerPortal,
+    TransfersCountFilter,
+    AviaCompanyFilter,
+    TicketsColumn,
+} from "@components";
+import type { DatePickerPortalHandle } from "@components";
 
 export default function App() {
   const datePickerRef = useRef<DatePickerPortalHandle>(null);

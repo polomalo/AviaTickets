@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import type { AppDispatch, RootState } from '../redux/store'
-import { setCurrency as setCurrencyAction } from '../redux/slices/currencySlice'
-import { useGetNbrbRatesQuery } from '../redux/api/nbrbApi'
-import { getErrorMessage } from '../utils/getErrorMessage'
-import type { CurrencyCode } from '../constants/currency'
+import type { AppDispatch, RootState } from '@/redux/store'
+import { setCurrency as setCurrencyAction } from '@/redux/slices/currencySlice'
+import { useGetNbrbRatesQuery } from '@/redux/api/nbrbApi'
+import { getErrorMessage } from '@/utils/getErrorMessage'
+import type { CurrencyCode } from '@/constants/currency'
 
 export function useCurrencyRates() {
     const { data: rates = {}, isLoading, error } = useGetNbrbRatesQuery()

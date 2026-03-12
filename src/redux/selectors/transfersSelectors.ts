@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
-import { DEFAULT_TRANSFER_OPTIONS } from '../../constants/search'
-import { getTransferCount } from '../../utils/ticketUtils'
+import type { RootState } from '@/redux/store'
+import { DEFAULT_TRANSFER_OPTIONS } from '@/constants/search'
+import { getTransferCount } from '@/utils/ticketUtils'
 
 export const selectTransferOptions = createSelector(
     [(state: RootState) => state.tickets.tickets],

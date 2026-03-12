@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { CurrencyCode } from '../../constants/currency'
-import { CURRENCY_OPTIONS } from '../../constants/currency'
-import { NBRB_RATES_URL } from '../../constants/currency'
-import type { NbrbRateItem } from '../../definitions/currency'
+import type { CurrencyCode } from '@/constants/currency'
+import { CURRENCY_OPTIONS } from '@/constants/currency'
+import { NBRB_RATES_URL } from '@/constants/currency'
+import type { NbrbRateItem } from '@/definitions/currency'
 
 const rawNbrbUrl = NBRB_RATES_URL ?? 'https://www.nbrb.by/api/exrates/rates?periodicity=0'
 const nbrbUrl =

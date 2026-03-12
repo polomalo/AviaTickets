@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { SearchParams } from '../../definitions/ticket'
-import { parseTicketsResponse } from '../../utils/parseTicketsResponse'
-import type { ParsedTicketsResult } from '../../utils/parseTicketsResponse'
+import type { SearchParams } from '@/definitions/ticket'
+import { parseTicketsResponse } from '@/utils/parseTicketsResponse'
+import type { ParsedTicketsResult } from '@/utils/parseTicketsResponse'
 
 const baseUrl = import.meta.env.VITE_API_URL ?? ''
 

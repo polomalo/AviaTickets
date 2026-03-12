@@ -2,10 +2,10 @@ import './TransfersCountFilter.scss';
 import { memo, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Skeleton } from '@mui/material';
-import type { AppDispatch, RootState } from '../../../redux/store';
-import { setAllTransfers, toggleTransferCount, selectOnlyTransferCount } from '../../../redux/slices/transfersFilterSlice';
-import { selectTransfersFilterView } from '../../../redux/selectors/transfersSelectors';
-import { formatTransfers } from '../../../utils/formatTransfers';
+import type { AppDispatch, RootState } from '@/redux/store';
+import { setAllTransfers, toggleTransferCount, selectOnlyTransferCount } from '@/redux/slices/transfersFilterSlice';
+import { selectTransfersFilterView } from '@/redux/selectors/transfersSelectors';
+import { formatTransfers } from '@/utils/formatTransfers';
 
 const checkIconUrl = `${import.meta.env.BASE_URL}Check.svg`;
 

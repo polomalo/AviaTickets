@@ -2,9 +2,9 @@ import '../TransfersCountFilter/TransfersCountFilter.scss';
 import { memo, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Skeleton } from '@mui/material';
-import type { AppDispatch, RootState } from '../../../redux/store';
-import { setAllAirlines, toggleAirline, selectOnlyAirline } from '../../../redux/slices/airlinesFilterSlice';
-import { selectAirlinesFilterView } from '../../../redux/selectors/airlinesSelectors';
+import type { AppDispatch, RootState } from '@/redux/store';
+import { setAllAirlines, toggleAirline, selectOnlyAirline } from '@/redux/slices/airlinesFilterSlice';
+import { selectAirlinesFilterView } from '@/redux/selectors/airlinesSelectors';
 
 const checkIconUrl = `${import.meta.env.BASE_URL}Check.svg`;
 
